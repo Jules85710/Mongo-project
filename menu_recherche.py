@@ -7,7 +7,7 @@ from recherche_avancée import recherche_avancee
 
 
 def menu_recherche(collection):
-    print("1 : Pour effectuer une recherche simple")
+    print("\n1 : Pour effectuer une recherche simple")
     print("2 : Pour effectuer une recherche avancée (avec des filtres)") 
     print("3 : Retour\n")
     choix_0 = input("Quelle type de recherche voulez-vous faire ?\n")

@@ -18,7 +18,7 @@ while True:
     
     if choix =="1":
         print("\n")
-        print("---------------- recherche de livre ----------------\n")
+        print("---------------- recherche de livre ----------------")
         recherche = menu_recherche(collection)
         if recherche.empty :
             print("Il n'y a aucun ouvrage qui correspond à votre recherche.\n")

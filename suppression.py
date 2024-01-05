@@ -7,8 +7,12 @@ from bson import ObjectId
 def menu_suppression(collection):
     indicateur_suppression = False
     print("1 : Pour supprimer un livre à l'aide de son identifiant unique")
-    print("2 : Pour supprimer un livre en faisant une recherche dans la bibliothèque\n") 
+    print("2 : Pour supprimer un livre en faisant une recherche dans la bibliothèque") 
+    print("3 : Pour une suppression de plusieurs livres\n")
     choix_1 = input("Quelle type de suppresion voulez-vous faire ?\n")
+    while not (choix_1 =="1" or choix_1 =="2" or choix_1 =="3") : 
+        choix_1 = input("Je n'ai pas compris, veuillez ressaisir votre choix.\n")
+        
     
     if choix_1 =="1":
         L=[]
@@ -35,8 +39,7 @@ def menu_suppression(collection):
         while reessai_recherche :
             sortie = menu_recherche(collection)
             if sortie.empty :
-                print("Il n'y a aucun ouvrage qui correspond à votre recherche.\n")
-                print("1 : Pour refaire une recherche")
+                print("1 : SI vous voulez refaire une recherche pour supprimer un ouvrage.")
                 print("2 : Pour retourner au menu\n")
                 choix_2 = input("Que voulez-vous faire ?\n")
                 while not(choix_2 == "1" or choix_2 == "2"):
@@ -64,7 +67,8 @@ def menu_suppression(collection):
                 pd_dataframe = ligne[["_id", "title", "year", "authors", "type"]]
                 indicateur_suppression = True
                 reessai_recherche = False
-    if indicateur_suppression : 
+                
+    if (choix_1 == "1"or choix_1 == "2") and indicateur_suppression : 
         print("\n Vous allez supprimer le livre suivant :\n ")
         print(pd_dataframe)    
         print("\n1 : Pour supprimer ce livre")
@@ -87,6 +91,98 @@ def menu_suppression(collection):
                 
         elif choix_2 =='2':
             menu_suppression(collection)
+            
+    if choix_1 == "3":
+        print('---------------- suppression multiple ---------------\n')
+        print("1 : Pour supprimer tous les oeuvres écrite par un auteur")
+        print("2 : Pour supprimer toutes les oeuvres datant d'une certaine année\n")
+        
+        choix_3 = input("Quel est votre choix ?\n")
+        while not (choix_3 =="1" or choix_3 =="2") : 
+            choix_3 = input("Je n'ai pas compris, veuillez ressaisir votre choix.\n")
+        
+        if choix_3 == "1":
+            reiteration_auteur = True
+            while reiteration_auteur :
+                input_auteur = input("\nVeuillez saisir l'auteur dont vous voulez supprimer ses oeuvres de la bibliothèque :\n")
+                
+                recherche = collection.find({"authors": {"$in": [input_auteur]}})
+                list_recherche = list(recherche)
+                if len(list_recherche) == 0 :
+                    print("Cet auteur n'a pas écrit d'oeuvres présent dans la bibliothèque.\n")
+                    print("Voulez-vous en saisir un nouveau ?\n")
+                    print("1 : Pour saisir un nouvel auteur")
+                    print("2 : pour retourner au menu\n")
+                    choix_5 = input("\nQuel est votre choix ?\n")
+                    while not (choix_5 =="1" or choix_5 =="2") : 
+                        choix_5 = input("Je n'ai pas compris, veuillez ressaisir votre choix.\n")
+                    if choix_5 =="2":
+                        reiteration_auteur = False
+                
+                else : 
+                    reiteration_auteur = False
+                    data = pd.DataFrame(list_recherche)
+                    print("\n Vous allez supprimer les oeuvres suivantes de la bilbiothèque :\n")
+                    print(data)
+                    
+                    print("\nEtes-vous sur de vouloir les supprimer ? \n")
+                    print("1 : Pour supprimer ces oeuvres")
+                    print("2 : Pour retourner au menu")
+                    
+                    choix_4 = input("\nQuel est votre choix ?\n")
+                    while not (choix_4 =="1" or choix_4 =="2") : 
+                        choix_4 = input("Je n'ai pas compris, veuillez ressaisir votre choix.\n")
+                    
+                    if choix_4 == "1":
+                        collection.delete_many({"authors": {"$in": [input_auteur]}})
+                        print(f"\nLes oeuvres écrites par {input_auteur} ont bien été supprimées.\n")
+                    
+                    
+            
+            
+        if choix_3 == "2" :
+            
+            reiteration_annee = True
+            while reiteration_annee :
+                input_annee = input("\nVeuillez saisir l'année dont vous voulez supprimer les oeuvres :\n")
+                while not(input_annee.isnumeric() and  int(input_annee)<2025):
+                    input_annee = input("\nVous n'avez pas saisi une année. Veuillez ressaisir une année.\n")
+                    
+                recherche = collection.find({"year" : int(input_annee)})
+                list_recherche = list(recherche)
+                if len(list_recherche) == 0 :
+                    print(f"Aucune oeuvre n'est parue durant l'année : {int(input_annee)}\n")
+                    print("Voulez-vous en saisir une à nouveau ?\n")
+                    print("1 : Pour saisir une nouvelle année")
+                    print("2 : pour retourner au menu\n")
+                    choix_7 = input("\nQuel est votre choix ?\n")
+                    while not (choix_7 =="1" or choix_7 =="2") : 
+                        choix_7 = input("Je n'ai pas compris, veuillez ressaisir votre choix.\n")
+                    if choix_7 =="2":
+                        reiteration_annee = False
+                
+                else : 
+                    reiteration_annee = False
+                    data = pd.DataFrame(list_recherche)
+                    print("\n Vous allez supprimer les oeuvres suivantes de la bilbiothèque :\n")
+                    print(data)
+                    
+                    print("\nEtes-vous sur de vouloir les supprimer ? \n")
+                    print("1 : Pour supprimer ces oeuvres")
+                    print("2 : Pour retourner au menu")
+                    
+                    choix_8 = input("\nQuel est votre choix ?\n")
+                    while not (choix_8 =="1" or choix_8 =="2") : 
+                        choix_8 = input("Je n'ai pas compris, veuillez ressaisir votre choix.\n")
+                    
+                    if choix_8 == "1":
+                        collection.delete_many({"year" : int(input_annee)})
+                        print(f"\nLes oeuvres parues en {int(input_annee)} ont bien été supprimées.\n")
+                    
+                    
+                
+            
+        
                 
             
         

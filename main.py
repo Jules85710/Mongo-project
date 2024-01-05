@@ -22,22 +22,20 @@ while True:
     
     if choix =="1": #cas de la recherche
         print("\n")
-        print("---------------- recherche de livre ----------------")
+        print("---------------- recherche d'oeuvre ----------------")
         recherche = menu_recherche(collection)
-        if recherche.empty :
-            print("Il n'y a aucun ouvrage qui correspond à votre recherche.\n")
-        else : 
+        if not(recherche.empty) :
             print("Voici les résultats de la recherche : \n")
             print(recherche[["_id", "title", "year", "authors", "type" ]])
             
     elif choix == "2": # cas de l'ajout
         print("\n")
-        print("---------------- ajout de livre --------------------\n")
+        print("---------------- ajout d'oeuvre --------------------\n")
         ajout_livre(collection)
         
     elif choix == "3": # cas de la suppression
         print("\n")
-        print("------------- suppression de livre -----------------\n")
+        print("------------- suppression d'oeuvre -----------------\n")
         menu_suppression(collection)
         
     elif choix == "4": # pour fermer l'application

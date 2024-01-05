@@ -9,7 +9,7 @@ def recherche_auteur( collection):
         L = list(results)
         
         if len(L) == 0:
-            print("\nL'auteur que vous avez indiqué n'a écrit aucun livre dont nous disposons dans la bibliothèque.\n")
+            print("\nL'auteur que vous avez indiqué n'a écrit aucun ouvrage dont nous disposons dans la bibliothèque.\n")
             print("1 : Pour ressaisir un nom d'auteur")
             print("2 : Pour retourner au menu\n")
             choix_0 = input("Que voulez vous faire ?")

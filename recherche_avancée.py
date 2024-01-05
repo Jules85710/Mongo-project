@@ -2,8 +2,8 @@
 import pandas as pd
 
 def recherche_avancee(collection):
-    reinteration_recherche = True
-    while reinteration_recherche :
+    reiteration_recherche = True
+    while reiteration_recherche :
         print('\n------------------Recherche filtrée-------------------')
         print("\nNous allons remplir les filtres pour chaque variable une à une.")
         print("Si vous ne voulez pas filtrer suivant une variable il suffit de ne rien indiquer lorsqu'on vous questionnera sur cette variable.\n")
@@ -71,7 +71,6 @@ def recherche_avancee(collection):
                 reiteration_recherche = False
         
         else :
-            reinteration_recherche = False
         
             print(f"\nLe filtre choisi est donc {dico}\n")
             dico_requete = {}
@@ -92,6 +91,22 @@ def recherche_avancee(collection):
                     
 
             results = collection.find({"$and" : [requete for requete in dico_requete.values()]})
-            data = pd.DataFrame(list(results))
-            return(data)
+            list_results = list(results)
+            if len(list_results) == 0 :
+                print("Il n'y a aucun ouvrage qui correspond à votre recherche.\n")
+                print("1 : Pour refaire une recherche filtrée")
+                print("2 : Pour retourner au menu")
+                choix_0 = input("Que voulez vous faire ?\n")
+                while not (choix_0 =="1" or choix_0 =="2") : 
+                    choix_0 = input("\nJe n'ai pas compris, veuillez ressaisir votre choix.\n")
+                    
+                if choix_0 =="2":
+                    reiteration_recherche = False
+                    data = pd.DataFrame(list_results)
+                    return(data)
+            else :
+                reiteration_recherche = False
+                data = pd.DataFrame(list_results)
+            
+                return(data)
                     

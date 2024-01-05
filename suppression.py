@@ -83,7 +83,7 @@ def menu_suppression(collection):
             elif type == "Article":
                 print(f"\nL' article : '{ligne["title"]}' a bien été supprimé.")
             else :
-                f"\nLa thèse : '{ligne["title"]}' a bien été supprimé."
+                f"\nLa thèse : '{ligne["title"]}' a bien été supprimée."
                 
         elif choix_2 =='2':
             menu_suppression(collection)

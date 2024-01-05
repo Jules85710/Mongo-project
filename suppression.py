@@ -29,7 +29,7 @@ def menu_suppression(collection):
         
     elif choix_1 == "2":
         print("\n")
-        print('   --------recherche du livre à supprimer----------\n')
+        print('-----------recherche du livre à supprimer-------------\n')
         
         reessai_recherche = True
         while reessai_recherche :
